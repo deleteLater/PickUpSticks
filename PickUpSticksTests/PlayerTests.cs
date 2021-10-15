@@ -50,6 +50,7 @@ namespace PickUpSticksTests
 
             var pickUpResult = player.PickUpSticksRandomly(panel);
             pickUpResult.ShouldBeTrue();
+            panel.GetRow(1).StickCount.ShouldBeLessThan(3);
         }
     }
 }
