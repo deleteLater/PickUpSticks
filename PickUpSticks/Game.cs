@@ -15,6 +15,8 @@
 
         public void Run()
         {
+            GameLogger.PanelLog("the game begins");
+            
             var playerAPickSuccess = false;
             var playerBPickSuccess = false;
             

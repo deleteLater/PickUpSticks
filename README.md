@@ -33,5 +33,11 @@ pick up sticks game in csharp
 
 全程无需用到鼠标
 
+## RUN
+程序运行入口在 StartPoint.cs 运行示例
+
+![console-output](docs/output.jpg)
+
 ## TODO
+- [ ] 美化日志输出 使其更直观
 - [ ] 写一个前端项目在线演示玩家选取木棍的全过程
