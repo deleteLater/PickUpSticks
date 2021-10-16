@@ -42,6 +42,17 @@ namespace PickUpSticksTests
         }
 
         [Fact]
+        public void Should_Throw_Exception_When_Player_Take_Less_Than_One_Stick()
+        {
+            var player = new Player("little bob");
+            var panel = new SticksRowPanel();
+            panel.CreateRow(3);
+            
+            Should.Throw<CannotTakeLessThanOneStickException>(() => player.PickUpSticks(panel, 1, 0));
+            Should.Throw<CannotTakeLessThanOneStickException>(() => player.PickUpSticks(panel, 1, -1));
+        }
+
+        [Fact]
         public void Should_PickUp_Sticks_Randomly()
         {
             var player = new Player("little bob");

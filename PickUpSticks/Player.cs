@@ -19,6 +19,11 @@ namespace PickUpSticks
 
         public void PickUpSticks(SticksRowPanel panel, int rowNumber, int numberOfSticks)
         {
+            if (numberOfSticks < 1)
+            {
+                throw new CannotTakeLessThanOneStickException("cannot take less than one stick at one time.");
+            }
+            
             GameLogger.PlayerLog($"{Name} chose row {rowNumber}, take {numberOfSticks} sticks.");
             
             panel.RemoveSticks(rowNumber, numberOfSticks);

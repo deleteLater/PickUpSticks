@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace PickUpSticks
@@ -14,7 +13,7 @@ namespace PickUpSticks
         }
 
         public int RowsCount => _rows.Count;
-        public ReadOnlyCollection<SticksRow> CurrentRows => _rows.AsReadOnly();
+        public IEnumerable<SticksRow> CurrentRows => _rows.AsEnumerable();
         public bool HasStick => _rows.Any(x => x.HasStick);
 
         public SticksRow CreateRow(int numberOfSticks)
