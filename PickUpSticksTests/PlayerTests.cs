@@ -1,4 +1,5 @@
 ﻿using PickUpSticks;
+using PickUpSticks.Exceptions;
 using Shouldly;
 using Xunit;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PickUpSticks
+namespace PickUpSticks.Exceptions
 {
     [Serializable]
     public class CannotTakeLessThanOneStickException : Exception
