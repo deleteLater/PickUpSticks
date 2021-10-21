@@ -17,7 +17,7 @@ namespace PickUpSticks
         public IEnumerable<SticksRow> CurrentRows => _rows.AsEnumerable();
         public bool HasStick => _rows.Any(x => x.HasStick);
 
-        public SticksRow CreateRow(int numberOfSticks)
+        public SticksRow CreateRowAndPutSticks(int numberOfSticks)
         {
             var rowNumber = _rows.Count + 1;
             var sticksRow = new SticksRow(rowNumber, numberOfSticks);

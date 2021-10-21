@@ -4,9 +4,9 @@ var littleBob = new Player("little bob");
 var littleTom = new Player("little tom");
 
 var panel = new SticksRowPanel();
-panel.CreateRow(3);
-panel.CreateRow(5);
-panel.CreateRow(7);
+panel.CreateRowAndPutSticks(3);
+panel.CreateRowAndPutSticks(5);
+panel.CreateRowAndPutSticks(7);
 
 var game = new Game(littleBob, littleTom, panel);
 game.Run();

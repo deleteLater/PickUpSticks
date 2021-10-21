@@ -20,7 +20,7 @@ namespace PickUpSticksTests
         {
             var sticksRowPanel = new SticksRowPanel();
             
-            var sticksRow = sticksRowPanel.CreateRow(3);
+            var sticksRow = sticksRowPanel.CreateRowAndPutSticks(3);
 
             sticksRowPanel.RowsCount.ShouldBe(1);
             sticksRowPanel.HasStick.ShouldBeTrue();
@@ -33,7 +33,7 @@ namespace PickUpSticksTests
         {
             var sticksRowPanel = new SticksRowPanel();
 
-            sticksRowPanel.CreateRow(3);
+            sticksRowPanel.CreateRowAndPutSticks(3);
 
             var sticksRow = sticksRowPanel.GetRow(1);
             sticksRow.ShouldNotBeNull();

@@ -23,7 +23,7 @@ namespace PickUpSticksTests
         {
             var player = new Player("little bob");
             var panel = new SticksRowPanel();
-            panel.CreateRow(3);
+            panel.CreateRowAndPutSticks(3);
 
             player.PickUpSticks(panel, 1, 3);
 
@@ -36,7 +36,7 @@ namespace PickUpSticksTests
         {
             var player = new Player("little bob");
             var panel = new SticksRowPanel();
-            panel.CreateRow(3);
+            panel.CreateRowAndPutSticks(3);
 
             Should.Throw<NumberOfRowOutOfRangeException>(() => player.PickUpSticks(panel, 2, 3));
             Should.Throw<NumberOfSticksOutOfRangeException>(() => player.PickUpSticks(panel, 1, 4));
@@ -47,7 +47,7 @@ namespace PickUpSticksTests
         {
             var player = new Player("little bob");
             var panel = new SticksRowPanel();
-            panel.CreateRow(3);
+            panel.CreateRowAndPutSticks(3);
             
             Should.Throw<CannotTakeLessThanOneStickException>(() => player.PickUpSticks(panel, 1, 0));
             Should.Throw<CannotTakeLessThanOneStickException>(() => player.PickUpSticks(panel, 1, -1));
@@ -58,7 +58,7 @@ namespace PickUpSticksTests
         {
             var player = new Player("little bob");
             var panel = new SticksRowPanel();
-            panel.CreateRow(3);
+            panel.CreateRowAndPutSticks(3);
 
             var pickUpResult = player.PickUpSticksRandomly(panel);
             pickUpResult.ShouldBeTrue();
