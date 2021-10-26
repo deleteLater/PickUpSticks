@@ -1,4 +1,6 @@
-﻿namespace PickUpSticks
+﻿using System;
+
+namespace PickUpSticks
 {
     public class Game
     {
@@ -13,13 +15,17 @@
             _sticksRowPanel = sticksRowPanel;
         }
 
+        public event EventHandler<string> GameRunning;
+        protected virtual void OnGameRunning(string message)
+            => GameRunning?.Invoke(this, message);
+
         public void Run()
         {
-            GameLogger.PanelLog("the game begins");
-            
+            OnGameRunning("the game begins");
+
             var playerAPickSuccess = false;
             var playerBPickSuccess = false;
-            
+
             while (_sticksRowPanel.HasStick)
             {
                 playerAPickSuccess = _playerA.PickUpSticksRandomly(_sticksRowPanel);
@@ -28,11 +34,11 @@
 
             if (playerBPickSuccess)
             {
-                GameLogger.PanelLog($"{_playerA.Name} win the game!");
+                OnGameRunning($"{_playerA.Name} win the game!");
             }
             else if (playerAPickSuccess)
             {
-                GameLogger.PanelLog($"{_playerB.Name} win the game!");
+                OnGameRunning($"{_playerB.Name} win the game!");
             }
         }
     }

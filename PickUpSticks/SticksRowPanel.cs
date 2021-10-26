@@ -1,9 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using PickUpSticks.Exceptions;
 
 namespace PickUpSticks
 {
+    public class StickRemovedEventArgs : EventArgs
+    {
+        public int RowNumber { get; set; }
+        public int NumberOfSticksToRemove { get; set; }
+        public int RemainedSticks { get; set; }
+    }
+    
     public class SticksRowPanel
     {
         private readonly List<SticksRow> _rows;
@@ -34,7 +42,8 @@ namespace PickUpSticks
             return sticksRow;
         }
 
-        public void RemoveSticks(int rowNumber, int numberOfSticks)
+        public event EventHandler<StickRemovedEventArgs> StickRemoved;
+        public void RemoveSticks(int rowNumber, int numberOfSticksToRemove)
         {
             var row = _rows.FirstOrDefault(x => x.RowNumber == rowNumber);
             if (row == null)
@@ -43,8 +52,22 @@ namespace PickUpSticks
                     $"panel does not exist a row with rowNumber {rowNumber}"
                 );
             }
+            
+            OnStickRemoved(row, numberOfSticksToRemove);
 
-            row.RemoveSticks(numberOfSticks);
+            row.RemoveSticks(numberOfSticksToRemove);
+        }
+
+        protected virtual void OnStickRemoved(SticksRow row, int numberOfSticksToRemove)
+        {
+            var eventArgs = new StickRemovedEventArgs
+            {
+                RowNumber = row.RowNumber,
+                NumberOfSticksToRemove = numberOfSticksToRemove, 
+                RemainedSticks = row.StickCount - numberOfSticksToRemove
+            };
+            
+            StickRemoved?.Invoke(this, eventArgs);
         }
     }
 }

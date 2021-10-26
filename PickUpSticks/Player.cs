@@ -4,6 +4,13 @@ using PickUpSticks.Exceptions;
 
 namespace PickUpSticks
 {
+    public class StickPickedEventArgs : EventArgs
+    {
+        public string PlayerName { get; set; }
+        public int RowNumber { get; set; }
+        public int NumberOfSticks { get; set; }
+    }
+
     public class Player
     {
         public string Name { get; }
@@ -14,18 +21,31 @@ namespace PickUpSticks
             {
                 throw new PlayerNameNotValidException("player name cannot be empty or null.");
             }
-            
+
             Name = name;
         }
 
-        public void PickUpSticks(SticksRowPanel panel, int rowNumber, int numberOfSticks)
+        public event EventHandler<StickPickedEventArgs> StickPicked;
+        protected virtual void OnStickPicked(int rowNumber, int numberOfSticks)
+        {
+            var eventArgs = new StickPickedEventArgs
+            {
+                PlayerName = Name,
+                RowNumber = rowNumber,
+                NumberOfSticks = numberOfSticks
+            };
+
+            StickPicked?.Invoke(this, eventArgs);
+        }
+
+        public void PickupSticks(SticksRowPanel panel, int rowNumber, int numberOfSticks)
         {
             if (numberOfSticks < 1)
             {
                 throw new CannotTakeLessThanOneStickException("cannot take less than one stick at one time.");
             }
-            
-            GameLogger.PlayerLog($"{Name} chose row {rowNumber}, take {numberOfSticks} sticks.");
+
+            OnStickPicked(rowNumber, numberOfSticks);
             
             panel.RemoveSticks(rowNumber, numberOfSticks);
         }
@@ -38,20 +58,18 @@ namespace PickUpSticks
             }
 
             // 1. get a random row that has sticks
-            // 2. get a random number of sticks based on the random row
+            // 2. pickup a random number of sticks based on the random row
             var random = new Random();
-            
+
             var rowsHasStick = panel.CurrentRows
                 .Where(x => x.HasStick)
-                .Select(x => x.RowNumber)
                 .ToArray();
-            
-            var randomRowNumber = rowsHasStick[random.Next(rowsHasStick.Length)];
-            var randomRow = panel.GetRow(randomRowNumber);
+            var randomRow = rowsHasStick.ElementAt(random.Next(rowsHasStick.Length));
+            var randomRowNumber = randomRow.RowNumber;
             var randomNumberOfSticks = random.Next(1, randomRow.StickCount);
 
-            PickUpSticks(panel, randomRowNumber, randomNumberOfSticks);
-            
+            PickupSticks(panel, randomRowNumber, randomNumberOfSticks);
+
             return true;
         }
     }

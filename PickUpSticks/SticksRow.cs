@@ -26,8 +26,6 @@ namespace PickUpSticks
                 );
             }
 
-            GameLogger.PanelLog($"-- row {RowNumber} remove {numberOfSticks} sticks, remain {StickCount - numberOfSticks} sticks.");
-            
             _sticks.RemoveRange(0, numberOfSticks);
         }
     }
